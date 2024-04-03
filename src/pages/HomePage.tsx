@@ -1,14 +1,16 @@
 // src/components/HomePage.tsx
 import { Grid, Typography, Button, Box, Paper, AppBar, Toolbar, IconButton } from '@mui/material';
 //import MenuIcon from '@mui/icons-material/Menu'; // 如果需要的话
-import NavBar from './NavBar';
-import Footer from './Footer';
-import ImageUpload from './ImageUpload';
+import NavBar from '../components/NavBar';
+import Footer from '../components/Footer';
+import ImageUpload from '../components/ImageUpload';
 import React, { useState } from 'react';
+import FileUpload from '../components/FileUpload';
 
 const HomePage: React.FC = () => {
   const [uploadedImageUrl, setUploadedImageUrl] = useState<string | null>(null);
-  
+  const [uploadedDoctorImageUrl, setUploadedDoctorImageUrl] = useState<string>('picture/doctor.png'); // 默认医生图片路径
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <NavBar />
@@ -25,7 +27,7 @@ const HomePage: React.FC = () => {
             <Typography variant="subtitle1" sx={{ color: 'text.secondary', fontSize: '1.75rem', ml: 54 }}>
               智慧舌苔图像诊疗平台
             </Typography>
-            <Box sx={{ width: '100%', borderTop: '1px solid #e0e0e0', my: 0 ,}} />
+            <Box sx={{ width: '100%', borderTop: '1px solid #e0e0e0', my: 0, }} />
           </Box>
         </Grid>
 
@@ -33,12 +35,12 @@ const HomePage: React.FC = () => {
         {/* 上传区域和诊断结果区域 */}
         {/* 减少间距 */}
         <Grid container spacing={20} justifyContent="center" sx={{ px: 0, py: 2 }}>
-          
-        {/* 上传区域 */}
+
+          {/* 上传区域 */}
           <Grid item xs={12} md={4}>
             <Paper elevation={6} sx={{ p: 3, display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: '450px', maxWidth: '450px' }}>
               {/* 条件渲染：如果有上传的图片就显示它，否则显示默认图片 */}
-              
+
               <Box sx={{ width: '100%' }}>
                 {uploadedImageUrl ? (
                   <img src={uploadedImageUrl} alt="Tongue" style={{ width: '100%', height: 'auto' }} />
@@ -49,7 +51,7 @@ const HomePage: React.FC = () => {
               <Typography variant="h6" sx={{ mt: 1, alignSelf: 'flex-start' }}>Your Tongue Here</Typography>
               <Typography sx={{ my: 1, alignSelf: 'flex-start' }}>Improving the clarity of images can help with accurate diagnostic results</Typography>
 
-              <ImageUpload setUploadedImageUrl={setUploadedImageUrl} />
+              <ImageUpload setUploadedImageUrl={setUploadedImageUrl} setUploadedDoctorImageUrl={setUploadedDoctorImageUrl} />
             </Paper>
           </Grid>
 
@@ -60,10 +62,10 @@ const HomePage: React.FC = () => {
                 Diagnosis Results:
               </Typography> */}
               <Box sx={{ width: '100%', alignSelf: 'center' }}>
-                <img src="/picture/doctor.png" alt="Doctor" style={{ maxWidth: '100%', height: 'auto' }} />
+                <img src={uploadedDoctorImageUrl} alt="Doctor" style={{ maxWidth: '100%', height: 'auto' }} />
               </Box>
-              <Typography sx={{ mt: 0, alignSelf: 'flex-start' ,fontSize: '1.5rem'}}> Diagnosis Results:</Typography>
-              <Typography variant="caption" sx={{ mt: 1 ,fontSize: '1.3rem', marginLeft: 'auto',mr:10}}>
+              <Typography sx={{ mt: 0, alignSelf: 'flex-start', fontSize: '1.5rem' }}> Diagnosis Results:</Typography>
+              <Typography variant="caption" sx={{ mt: 1, fontSize: '1.3rem', marginLeft: 'auto', mr: 10 }}>
                 unknown
               </Typography>
             </Paper>

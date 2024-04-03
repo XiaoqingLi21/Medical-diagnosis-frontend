@@ -2,20 +2,55 @@
 import React, { useState, useRef } from 'react';
 import { Button, Box, Alert } from '@mui/material';
 
-const ImageUpload: React.FC<{ setUploadedImageUrl: (url: string) => void }> = ({ setUploadedImageUrl }) => {
+interface ImageUploadProps {
+  setUploadedImageUrl: (url: string) => void;
+  setUploadedDoctorImageUrl: (url: string) => void; // 添加这一行
+}
+
+const ImageUpload: React.FC<ImageUploadProps> = ({ setUploadedImageUrl, setUploadedDoctorImageUrl }) => {
   const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const validTypes = ['image/jpeg', 'image/png', 'image/gif'];
     const file = event.target.files ? event.target.files[0] : null;
-    if (file && validTypes.includes(file.type)) {
-      const imageUrl = URL.createObjectURL(file);
-      setUploadedImageUrl(imageUrl); // 更新父组件的状态
-      setError(null);
-    } else {
-      setError('Please upload an image file (jpeg, png, gif).');
+    if (!file) {
+      setError('Please select a file.');
+      return;
     }
+
+    const validTypes = ['image/jpeg', 'image/png', 'image/gif'];
+    if (!validTypes.includes(file.type)) {
+      setError('Please upload an image file (jpeg, png, gif).');
+      return;
+    }
+
+    // Prepare file for upload
+    const formData = new FormData();
+    formData.append('file', file);
+
+    // TODO: Replace URL with your actual upload endpoint
+    fetch('http://localhost:5000/upload', {
+      method: 'POST',
+      body: formData,
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.filename) {
+        const imageUrl = URL.createObjectURL(file);
+      setUploadedImageUrl(imageUrl); // 立即显示上传的舌头图片
+
+        // Update the doctor image with a predefined local image
+        // Adjust the path according to your project structure
+        const doctorImageUrl = '/picture/good-results.jpg';
+        setUploadedDoctorImageUrl(doctorImageUrl);
+        setError(null);
+      } else {
+        setError('Failed to upload image.');
+      }
+    })
+    .catch(() => {
+      setError('Failed to upload image.');
+    });
   };
 
   return (
@@ -24,28 +59,17 @@ const ImageUpload: React.FC<{ setUploadedImageUrl: (url: string) => void }> = ({
         ref={fileInputRef}
         accept="image/*"
         style={{ display: 'none' }}
-        id="raised-button-file"
-        multiple
         type="file"
         onChange={handleImageChange}
       />
       <Button
-        variant="outlined" // 或者 "contained"，取决于您想要的风格
+        variant="outlined"
         component="span"
         onClick={() => fileInputRef.current?.click()}
-        sx={{
-          mt: 2,
-          py: 1.5, // 增加垂直内边距
-          px: 3, // 增加水平内边距
-          fontSize: '1rem', // 增大字体大小
-          borderRadius: '0', // 移除圆角效果
-          textTransform: 'none', // 取消大写字母样式
-          // 其他您希望的样式调整...
-        }}
       >
-        Upload Tongue Image
+        Upload Image
       </Button>
-      {error && <Alert severity="error" sx={{ mt: 2 }}>{error}</Alert>}
+      {error && <Alert severity="error">{error}</Alert>}
     </Box>
   );
 };

@@ -1,6 +1,6 @@
 // src/App.tsx
 import React from 'react';
-import HomePage from './components/HomePage';
+import HomePage from './pages/HomePage';
 import { CssBaseline } from '@mui/material';
 
 function App() {
