@@ -49,7 +49,11 @@ const HomePage: React.FC = () => {
                 )}
               </Box>
               <Typography variant="h6" sx={{ mt: 1, alignSelf: 'flex-start' }}>Your Tongue Here</Typography>
-              <Typography sx={{ my: 1, alignSelf: 'flex-start' }}>Improving the clarity of images can help with accurate diagnostic results</Typography>
+              <Typography sx={{ my: 1, alignSelf: 'flex-start' }}>
+                 —提高图像的清晰度有助于获得准确的诊断结果<br />
+                 —Improving the clarity of images can help with accurate diagnostic results.
+              </Typography>
+
 
               <ImageUpload setUploadedImageUrl={setUploadedImageUrl} setUploadedDoctorImageUrl={setUploadedDoctorImageUrl} />
             </Paper>
@@ -64,9 +68,9 @@ const HomePage: React.FC = () => {
               <Box sx={{ width: '100%', alignSelf: 'center' }}>
                 <img src={uploadedDoctorImageUrl} alt="Doctor" style={{ maxWidth: '100%', height: 'auto' }} />
               </Box>
-              <Typography sx={{ mt: 0, alignSelf: 'flex-start', fontSize: '1.5rem' }}> Diagnosis Results:</Typography>
-              <Typography variant="caption" sx={{ mt: 1, fontSize: '1.3rem', marginLeft: 'auto', mr: 10 }}>
-                unknown
+              <Typography sx={{ mt: 0, alignSelf: 'flex-start', fontSize: '1.5rem' }}> 诊断结果:</Typography>
+              <Typography variant="caption" sx={{ mt: 1, fontSize: '1.3rem', marginLeft: 30, mr: 10 }}>
+                未知
               </Typography>
             </Paper>
           </Grid>

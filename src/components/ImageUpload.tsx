@@ -66,8 +66,9 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ setUploadedImageUrl, setUploa
         variant="outlined"
         component="span"
         onClick={() => fileInputRef.current?.click()}
+        style={{ fontSize: "20px", padding: "10px 20px" }} // 调整字体大小和内边距
       >
-        Upload Image
+        点击上传图像
       </Button>
       {error && <Alert severity="error">{error}</Alert>}
     </Box>

@@ -10,10 +10,10 @@ const NavBar: React.FC = () => {
         <Typography variant="h6" component="div" sx={{ flexGrow: 1, ml: 30, color: 'green' , fontSize: '1.5rem'}}>
           Xiaoqing's App
         </Typography>
-        <Button color="inherit" sx={{ color: 'black' , fontSize: '1rem'}}>About me</Button>
-        <Button color="inherit" sx={{ color: 'black' , fontSize: '1rem'}}>Newsstand</Button>
-        <Button color="inherit" sx={{ color: 'black' , fontSize: '1rem'}}>Who we are</Button>
-        <Button color="inherit" sx={{ color: 'black' , fontSize: '1rem'}}>My account</Button>
+        <Button color="inherit" sx={{ color: 'black' , fontSize: '1rem'}}>江苏科技大学</Button>
+        <Button color="inherit" sx={{ color: 'black' , fontSize: '1rem'}}>软件工程</Button>
+        <Button color="inherit" sx={{ color: 'black' , fontSize: '1rem'}}>202219802221</Button>
+        <Button color="inherit" sx={{ color: 'black' , fontSize: '1rem'}}>李孝清</Button>
         <Button
           color="inherit"
           sx={{
@@ -23,10 +23,11 @@ const NavBar: React.FC = () => {
               fontSize: '1.5rem'
             },
             color: 'white', // 按钮文字颜色
-            marginRight: 30 // 右边距
+            marginRight: 30, // 右边距
+            marginLeft: 2 // 左边距
           }}
         >
-          Exit
+          退出
         </Button>
       </Toolbar>
     </AppBar>
