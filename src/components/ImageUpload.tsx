@@ -2,12 +2,14 @@
 import React, { useState, useRef } from 'react';
 import { Button, Box, Alert } from '@mui/material';
 
-interface ImageUploadProps {
+interface FileUploadProps {
   setUploadedImageUrl: (url: string) => void;
-  setUploadedDoctorImageUrl: (url: string) => void; // 添加这一行
+  setUploadedDoctorImageUrl: (url: string) => void;
+  setBasicResult: (result: string) => void;
+  setDetailedResult: (result: string) => void;
 }
 
-const ImageUpload: React.FC<ImageUploadProps> = ({ setUploadedImageUrl, setUploadedDoctorImageUrl }) => {
+const ImageUpload: React.FC<FileUploadProps> = ({ setUploadedImageUrl, setUploadedDoctorImageUrl, setBasicResult, setDetailedResult }) => {
   const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -37,12 +39,14 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ setUploadedImageUrl, setUploa
     .then(data => {
       if (data.filename) {
         const imageUrl = URL.createObjectURL(file);
-      setUploadedImageUrl(imageUrl); // 立即显示上传的舌头图片
+        setUploadedImageUrl(imageUrl); // 立即显示上传的舌头图片
 
         // Update the doctor image with a predefined local image
         // Adjust the path according to your project structure
         const doctorImageUrl = '/picture/good-results.jpg';
         setUploadedDoctorImageUrl(doctorImageUrl);
+        setBasicResult(data.basic_result);
+        setDetailedResult(data.detailed_result);
         setError(null);
       } else {
         setError('Failed to upload image.');

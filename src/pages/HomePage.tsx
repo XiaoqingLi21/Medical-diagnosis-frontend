@@ -7,9 +7,13 @@ import ImageUpload from '../components/ImageUpload';
 import React, { useState } from 'react';
 import FileUpload from '../components/FileUpload';
 
+
+
 const HomePage: React.FC = () => {
   const [uploadedImageUrl, setUploadedImageUrl] = useState<string | null>(null);
-  const [uploadedDoctorImageUrl, setUploadedDoctorImageUrl] = useState<string>('picture/doctor.png'); // 默认医生图片路径
+  const [uploadedDoctorImageUrl, setUploadedDoctorImageUrl] = useState<string>('picture/doctor.png');
+  const [basicResult, setBasicResult] = useState('');
+  const [detailedResult, setDetailedResult] = useState('');
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -55,7 +59,13 @@ const HomePage: React.FC = () => {
               </Typography>
 
 
-              <ImageUpload setUploadedImageUrl={setUploadedImageUrl} setUploadedDoctorImageUrl={setUploadedDoctorImageUrl} />
+              <ImageUpload
+                setUploadedImageUrl={setUploadedImageUrl}
+                setUploadedDoctorImageUrl={setUploadedDoctorImageUrl}
+                setBasicResult={setBasicResult}
+                setDetailedResult={setDetailedResult}
+              />
+
             </Paper>
           </Grid>
 
@@ -68,10 +78,16 @@ const HomePage: React.FC = () => {
               <Box sx={{ width: '100%', alignSelf: 'center' }}>
                 <img src={uploadedDoctorImageUrl} alt="Doctor" style={{ maxWidth: '100%', height: 'auto' }} />
               </Box>
-              <Typography sx={{ mt: 0, alignSelf: 'flex-start', fontSize: '1.5rem' }}> 诊断结果:</Typography>
-              <Typography variant="caption" sx={{ mt: 1, fontSize: '1.3rem', marginLeft: 30, mr: 10 }}>
-                未知
+              <Typography sx={{ mt: 0, alignSelf: 'flex-start', fontSize: '1.2rem' ,fontWeight: 'bold' }}> 舌苔分析：</Typography>
+              <Typography sx={{ mt: 0, alignSelf: 'flex-start', fontSize: '1.2rem' }}>
+                {`${basicResult} `}
               </Typography>
+              <Box sx={{ height: '20px' }} /> {/* 添加一个空的 Box 组件 */}
+              <Typography sx={{ mt: 0, alignSelf: 'flex-start', fontSize: '1.2rem' ,fontWeight: 'bold'}}> 诊断结果:</Typography>
+              <Typography sx={{ mt: 0, alignSelf: 'flex-start', fontSize: '1.2rem' }}>
+                {`${detailedResult}`}
+              </Typography>
+
             </Paper>
           </Grid>
         </Grid>

@@ -1,11 +1,13 @@
 import React, { useState, ChangeEvent } from 'react';
 //负责处理实际的文件上传到服务器
 interface FileUploadProps {
-  setUploadedImageUrl: (url: string) => void;
-  setUploadedDoctorImageUrl: (url: string) => void;
+    setUploadedImageUrl: (url: string) => void;
+    setUploadedDoctorImageUrl: (url: string) => void;
+    setBasicResult: (result: string) => void;
+    setDetailedResult: (result: string) => void;
 }
 
-const FileUpload: React.FC<FileUploadProps> = ({ setUploadedImageUrl, setUploadedDoctorImageUrl }) => {
+const FileUpload: React.FC<FileUploadProps> = ({ setUploadedImageUrl, setUploadedDoctorImageUrl, setBasicResult, setDetailedResult }) => {
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
     const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -23,16 +25,29 @@ const FileUpload: React.FC<FileUploadProps> = ({ setUploadedImageUrl, setUploade
                 method: 'POST',
                 body: formData,
             })
-            .then(response => response.json())
-            .then(data => {
-                console.log('File uploaded successfully', data);
-                // 根据实际情况更新上传图片的URL
-                setUploadedImageUrl('path_to_uploaded_image');
-                setUploadedDoctorImageUrl('path_to_new_doctor_image');
+            
+            .then(response => {
+                console.log('HTTP Response:', response);
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Network response was not ok: ' + response.statusText);
+                }
             })
-            .catch((error) => {
+            .then(data => {
+                console.log('Received data:', data);
+                if (data.basic_result && data.detailed_result) {
+                    setBasicResult(data.basic_result);
+                    setDetailedResult(data.detailed_result);
+                } else {
+                    console.error('Missing diagnosis results:', data);
+                }
+            })
+            .catch(error => {
                 console.error('Error uploading file:', error);
             });
+            
+
         }
     };
 
