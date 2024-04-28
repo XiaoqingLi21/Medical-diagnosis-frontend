@@ -12,7 +12,8 @@ import FileUpload from '../components/FileUpload';
 const HomePage: React.FC = () => {
   const [uploadedImageUrl, setUploadedImageUrl] = useState<string | null>(null);
   const [uploadedDoctorImageUrl, setUploadedDoctorImageUrl] = useState<string>('picture/doctor.png');
-  const [basicResult, setBasicResult] = useState('');
+  const [basicResult1, setBasicResult1] = useState('');
+  const [basicResult2, setBasicResult2] = useState('');
   const [detailedResult, setDetailedResult] = useState('');
 
   return (
@@ -62,7 +63,8 @@ const HomePage: React.FC = () => {
               <ImageUpload
                 setUploadedImageUrl={setUploadedImageUrl}
                 setUploadedDoctorImageUrl={setUploadedDoctorImageUrl}
-                setBasicResult={setBasicResult}
+                setBasicResult1={setBasicResult1}
+                setBasicResult2={setBasicResult2}
                 setDetailedResult={setDetailedResult}
               />
 
@@ -80,7 +82,10 @@ const HomePage: React.FC = () => {
               </Box>
               <Typography sx={{ mt: 0, alignSelf: 'flex-start', fontSize: '1.2rem' ,fontWeight: 'bold' }}> 舌苔分析：</Typography>
               <Typography sx={{ mt: 0, alignSelf: 'flex-start', fontSize: '1.2rem' }}>
-                {`${basicResult} `}
+                {`${basicResult1} `}
+              </Typography>
+              <Typography sx={{ mt: 0, alignSelf: 'flex-start', fontSize: '1.2rem' }}>
+                {`${basicResult2} `}
               </Typography>
               <Box sx={{ height: '20px' }} /> {/* 添加一个空的 Box 组件 */}
               <Typography sx={{ mt: 0, alignSelf: 'flex-start', fontSize: '1.2rem' ,fontWeight: 'bold'}}> 诊断结果:</Typography>

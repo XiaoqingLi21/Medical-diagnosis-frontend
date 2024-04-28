@@ -3,11 +3,12 @@ import React, { useState, ChangeEvent } from 'react';
 interface FileUploadProps {
     setUploadedImageUrl: (url: string) => void;
     setUploadedDoctorImageUrl: (url: string) => void;
-    setBasicResult: (result: string) => void;
+    setBasicResult1: (result: string) => void;
+    setBasicResult2: (result: string) => void;
     setDetailedResult: (result: string) => void;
 }
 
-const FileUpload: React.FC<FileUploadProps> = ({ setUploadedImageUrl, setUploadedDoctorImageUrl, setBasicResult, setDetailedResult }) => {
+const FileUpload: React.FC<FileUploadProps> = ({ setUploadedImageUrl, setUploadedDoctorImageUrl, setBasicResult1, setBasicResult2,setDetailedResult }) => {
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
     const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -37,10 +38,15 @@ const FileUpload: React.FC<FileUploadProps> = ({ setUploadedImageUrl, setUploade
             .then(data => {
                 console.log('Received data:', data);
                 if (data.basic_result && data.detailed_result) {
-                    setBasicResult(data.basic_result);
+                    setBasicResult1(data.basic_result1);
+                    setBasicResult2(data.basic_result2);
                     setDetailedResult(data.detailed_result);
                 } else {
                     console.error('Missing diagnosis results:', data);
+                }
+
+                if (data.message && data.message === 'Percent too low') {
+                    alert('Percent too low! Please upload another image.');
                 }
             })
             .catch(error => {

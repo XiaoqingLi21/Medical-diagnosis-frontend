@@ -5,11 +5,12 @@ import { Button, Box, Alert } from '@mui/material';
 interface FileUploadProps {
   setUploadedImageUrl: (url: string) => void;
   setUploadedDoctorImageUrl: (url: string) => void;
-  setBasicResult: (result: string) => void;
+  setBasicResult1: (result: string) => void;
+  setBasicResult2: (result: string) => void; // 修正函数声明
   setDetailedResult: (result: string) => void;
 }
 
-const ImageUpload: React.FC<FileUploadProps> = ({ setUploadedImageUrl, setUploadedDoctorImageUrl, setBasicResult, setDetailedResult }) => {
+const ImageUpload: React.FC<FileUploadProps> = ({ setUploadedImageUrl, setUploadedDoctorImageUrl, setBasicResult1, setBasicResult2,setDetailedResult }) => {
   const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -45,12 +46,17 @@ const ImageUpload: React.FC<FileUploadProps> = ({ setUploadedImageUrl, setUpload
         // Adjust the path according to your project structure
         const doctorImageUrl = '/picture/good-results.jpg';
         setUploadedDoctorImageUrl(doctorImageUrl);
-        setBasicResult(data.basic_result);
+        setBasicResult1(data.basic_result1);
+        setBasicResult2(data.basic_result2);
         setDetailedResult(data.detailed_result);
         setError(null);
       } else {
         setError('Failed to upload image.');
       }
+
+      if (data.message && data.message === 'Percent too low') {
+        alert('舌象清晰度太低或距离舌头距离太远，请重新上传图片');
+    }
     })
     .catch(() => {
       setError('Failed to upload image.');
