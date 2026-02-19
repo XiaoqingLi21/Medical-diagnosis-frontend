@@ -1,11 +1,10 @@
 // src/components/HomePage.tsx
-import { Grid, Typography, Button, Box, Paper, AppBar, Toolbar, IconButton } from '@mui/material';
+import { Grid, Typography, Box, Paper } from '@mui/material';
 //import MenuIcon from '@mui/icons-material/Menu'; // 如果需要的话
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
 import ImageUpload from '../components/ImageUpload';
 import React, { useState } from 'react';
-import FileUpload from '../components/FileUpload';
 
 
 
